@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>3cot</title>
+
+    <!-- Bootswatch theme -->
+    <link rel="stylesheet" href="minty.css">
+
+    <!-- Custom theme -->
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js');
+    }
+</script>
+
+<body>
+    <div class="sizing">
+        <div class="header">
+            <h1> 3cot </h1>
+            <h2> Calculateur du nombre de mailles</h2>
+        </div>
+
+        <br>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <label for="cm_maille_ref">Longueur de 10 centimètres</label>
+                    <input type="number" id="cm_maille_ref" value="10" readonly placeholder="Longueur d'une maille"
+                        min="0" step="1" class="ref_cm">
+                </div>
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <label for="mailles_ref">Nombre de mailles de l'échantillon</label>
+                    <input type="number" id="mailles_ref" placeholder="Nombre de mailles par rang" min="0" step="1">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <label for="cm_mailles_but">Longueur désirée</label>
+                    <input type="number" id="cm_mailles_but" placeholder="Longueur d'un rang" min="0" step="1">
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <label for="nb_mailles_out">Nombre de mailles requis</label>
+                    <input type="number" id="nb_mailles_out" readonly placeholder="Nombre de mailles" min="0" step="1"
+                        class="ref_cm">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <button type="button" id="calc_mailles" class="btn btn-primary">Calculer le nombre de
+                        mailles</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sizing"></div>
+        <div class="header">
+            <h2> Calculateur du nombre de rangs</h2>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <label for="cm_rang_ref">Nombre de rangs sur 10 centimètres</label>
+                    <input type="number" id="cm_rang_ref" value="10" readonly placeholder="Longueur d'un rang" min="0"
+                        step="1" class="ref_cm">
+                </div>
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <label for="rang_ref">Nombre de rangs dans l'échantillon</label>
+                    <input type="number" id="rang_ref" placeholder="Nombre de rangs" min="0" step="1">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <label for="cm_rang_but">Longueur désirée</label>
+                    <input type="number" id="cm_rang_but" placeholder="Nombre de rangs" min="0" step="1">
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <label for="nb_rang_out">Nombre de rangs total</label>
+                    <input type="number" id="nb_rang_out" readonly placeholder="Nombre de rangs à tricoter" min="0"
+                        step="1" class="ref_cm">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <button type="button" id="calc_rangs" class="btn btn-primary">Calculer le nombre
+                        de
+                        rangs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Calculate number of stitches
+        document.getElementById('calc_mailles').addEventListener('click', function () {
+            const cmRef = parseFloat(document.getElementById('cm_maille_ref').value);
+            const maillesRef = parseFloat(document.getElementById('mailles_ref').value);
+            const cmBut = parseFloat(document.getElementById('cm_mailles_but').value);
+
+            if (!isNaN(cmRef) && !isNaN(maillesRef) && !isNaN(cmBut) && cmRef > 0) {
+                const result = Math.round(maillesRef * cmBut / cmRef);
+                document.getElementById('nb_mailles_out').value = result;
+            } else {
+                document.getElementById('nb_mailles_out').value = '';
+            }
+        });
+
+        // Calculate number of rows
+        document.getElementById('calc_rangs').addEventListener('click', function () {
+            const cmRef = parseFloat(document.getElementById('cm_rang_ref').value);
+            const rangRef = parseFloat(document.getElementById('rang_ref').value);
+            const cmBut = parseFloat(document.getElementById('cm_rang_but').value);
+
+            if (!isNaN(cmRef) && !isNaN(rangRef) && !isNaN(cmBut) && cmRef > 0) {
+                const result = Math.round(rangRef * cmBut / cmRef);
+                document.getElementById('nb_rang_out').value = result;
+            } else {
+                document.getElementById('nb_rang_out').value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
